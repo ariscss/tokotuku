@@ -1,8 +1,8 @@
 <?php
     $server = "localhost";
     $user = "root";
-    $password = "secret";
-    $db = "onlinetoko";
+    $password = "";
+    $db = "tokoonline";
 
     $konek = mysqli_connect($server,$user,$password,$db);
 
