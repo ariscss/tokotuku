@@ -1,5 +1,8 @@
-<?php include_once "view/header.php"; ?>
-    <div class="container-fluid">
+<?php include_once "view/header.php"; 
+include "../lib/koneksi.php";
+
+?>
+    <div class="container-fluid mt-4">
         <div class="row">
             <div class="col-md-4">
                 <div class="card border-primary">
@@ -47,16 +50,28 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <?php
+                            $sql = "SELECT nm_barang,spesifikasi,harga,gambar,stok,status,keterangan FROM barang";
+                            $hasil = mysqli_query($konek, $sql);
+
+                            if (mysqli_num_rows($hasil) > 0) {
+                                // menampilkan hasil query
+                                while ($row = mysqli_fetch_assoc($hasil)) {
+                        ?>
                             <tr>
                                 <td scope="row"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?= $row["nm_barang"]; ?></td>
+                                <td><?= $row["spesifikasi"]; ?></td>
+                                <td><?= $row["harga"]; ?></td>
+                                <td><img src="image/<?= $row["gambar"]; ?>" alt="..." class="img-thumbnail" width="100"></td>
+                                <td><?= $row["stok"]; ?></td>
+                                <td><?= $row["status"]; ?></td>
+                                <td><?= $row["keterangan"]; ?></td>
                             </tr>
+                        <?php
+                                }
+                            }
+                        ?>
                         </tbody>
                 </table>
             </div>
@@ -73,7 +88,7 @@
                     <h5 class="modal-title">Tambah Data Barang</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="insert_barang.php" method="post">
+                    <form action="insert_barang.php" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                           <label for="namaBarang">Nama Barang</label>
                           <input type="text" name="namaBarang" id="namaBarang" class="form-control" placeholder="Nama Barang" aria-describedby="helpId">
@@ -89,9 +104,13 @@
                         <div class="form-group">
                           <label for="gambar">Gambar</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile">
+                                <input type="file" class="custom-file-input" id="customFile" name="gambar">
                                 <label class="custom-file-label" for="customFile">Pilih Gambar</label>
                             </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="stok">Stok</label>
+                          <input type="number" name="stok" id="stok" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
                         <div class="form-group">
                           <label for="status">Status</label>
@@ -102,11 +121,18 @@
                             <option value="lain-lain">Lain-lain</option>
                           </select>
                         </div>
+                        <div class="form-group">
+                          <label for="keterangan">Keterangan</label>
+                          <select class="form-control" name="keterangan" id="keterangan">
+                            <option value="hotSale">Hot Sale</option>
+                            <option value="new">New</option>
+                          </select>
+                        </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-outline-success">Simpan</button>
+                    <button type="submit" class="btn btn-outline-success" name="simpan" id="simpan">Simpan</button>
                 </div>
                     </form>
             </div>
