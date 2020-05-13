@@ -1,6 +1,7 @@
 <?php
 include "lib/koneksi.php";
-
+$sql = "SELECT nm_barang,spesifikasi,harga,gambar,keterangan FROM barang";
+$hasil = mysqli_query($konek,$sql);
 ?>
 
 <!doctype html>
@@ -72,6 +73,36 @@ include "lib/koneksi.php";
           </div>
         </div>
 
+      <?php
+      if (mysqli_num_rows($hasil) > 0) {
+        while ($row = mysqli_fetch_assoc($hasil)) { 
+      ?>
+          <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-3">
+              <img src="admin/image/<?= $row['gambar']; ?>" width="30px" height="418px" alt="Onix Mouse" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title"><?= $row['nm_barang']; ?></h5>
+                <p class="card-text"><strong>Rp78.000,-</strong></p>
+                <p class="card-text">"Lightweight Wireless Mouse with 1600 dpi and Silent Click."</p>
+                <a href="#" class="badge badge-info"><i class="fas fa-tags"></i>Category</a>
+              </div>
+              <div class="card-footer">
+                <form action="">
+                  <div class="input-group">
+                    <input type="number" class="form-control">
+                    <div class="input-group-append">
+                      <button class="btn btn-info">Add to Cart</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+  <?php
+        }
+      }
+?>
         <div class="row">
           <div class="col-md-6">
             <div class="card mb-3">
@@ -94,6 +125,7 @@ include "lib/koneksi.php";
               </div>
             </div>
           </div>
+
           <div class="col-md-6">
             <div class="card mb-3">
               <img src="assets/images/4.jpg" width="30px" height="418px"  alt="Onix Keyboard" class="card-img-top">
